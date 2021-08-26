@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const campsiteRouter = require('./routes/campsiteRouter');
 
 const hostname = 'localhost';
 const port = 3000;
@@ -8,47 +9,7 @@ const app = express();  //returns an express server application available by usi
 app.use(morgan('dev'));  //use 'dev' to get more info printed to the console
 app.use(express.json()); //when the server receives request in JSON format in the body, this middlewear will parse that data into JavaScript properties of the request object so that we can use that data in JS 
 
-app.all('/campsites', (req, res, next) => {
-    res.statusCode = 200;  //this is setting the statusCode for all of the requests, so no need to put them in the upcoming requests
-    res.setHeader('Content-Type', 'text/plain'); //this is setting the header for all of the requests, so no need to put them in the upcoming requests
-    next(); //will pass control of the application routing to the next relevent routing method after this one. Otherwise it would stop here.
-});
-
-app.get('/campsites', (req, res) => {
-    res.end('Will send all the campsites to you');
-});
-
-app.post('/campsites', (req, res) => {
-    res.end(`Will add the campsite: ${req.body.name} with description: ${req.body.description}`);
-});
-
-app.put('/campsites', (req, res) => {
-    res.statusCode = 403;  //403 is the error code when the operation is not supported
-    res.end('PUT operation not supported on /campsites');
-});
-
-app.delete('/campsites', (req, res) => {
-    res.end('Deleting all campsites');
-});
-
-app.get('/campsites/:campsiteId', (req, res) => {
-    res.end(`Will send details of the campsite: ${req.params.campsiteId} to you`);
-});
-
-app.post('/campsites/:campsiteId', (req, res) => {
-    res.statusCode = 403; 
-    res.end(`POST operation not supported on /campsites/${req.params.campsiteId}`);
-});
-
-app.put('/campsites/:campsiteId', (req, res) => {
-    res.write(`Updating the campsite: ${req.params.campsiteId}\n`);
-    res.end(`Will update the campsite: ${req.body.name}
-        with description: ${req.body.description}`);
-}); //we can use req.body.xx because we have parsed them out from the data that was sent to us; it is being echoed back as text
-
-app.delete('/campsites/:campsiteId', (req, res) => {
-    res.end(`Deleting campsite: ${req.params.campsiteId}`);
-});
+app.use('/campsites', campsiteRouter);
 
 app.use(express.static(__dirname + '/public'));
 
