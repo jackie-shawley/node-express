@@ -9,7 +9,7 @@ const app = express();  //returns an express server application available by usi
 app.use(morgan('dev'));  //use 'dev' to get more info printed to the console
 app.use(express.json()); //when the server receives request in JSON format in the body, this middlewear will parse that data into JavaScript properties of the request object so that we can use that data in JS 
 
-app.use('/campsites', campsiteRouter);
+app.use('/campsites', campsiteRouter); //the first argument is the root path for the campsiteRouter
 
 app.use(express.static(__dirname + '/public'));
 
