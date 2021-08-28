@@ -1,6 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const campsiteRouter = require('./routes/campsiteRouter');
+const promotionRouter = require('./routes/promotionRouter');
+
 
 const hostname = 'localhost';
 const port = 3000;
@@ -10,6 +12,7 @@ app.use(morgan('dev'));  //use 'dev' to get more info printed to the console
 app.use(express.json()); //when the server receives request in JSON format in the body, this middlewear will parse that data into JavaScript properties of the request object so that we can use that data in JS 
 
 app.use('/campsites', campsiteRouter); //the first argument is the root path for the campsiteRouter
+app.use('/promotions', promotionRouter);
 
 app.use(express.static(__dirname + '/public'));
 

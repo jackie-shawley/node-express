@@ -15,7 +15,7 @@ campsiteRouter.route('/') //this root path is defined in server.js in the app.us
 })
 .put((req, res) => {
     res.statusCode = 403;
-    res.end('PUT operation not supported on /campsites')
+    res.end('PUT operation not supported on /campsites');
 })
 .delete((req, res) => {
     res.end('Deleting all campsites');
